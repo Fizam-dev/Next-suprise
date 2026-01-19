@@ -10,9 +10,32 @@
   </head>
 
   <body class="container">
-    <audio id="bgMusic" loop autoplay>
-        <source src="ssstik.io_1755906624392.mp3" type="audio/mpeg">
-    </audio>
+    <audio id="bgMusic" loop autoplay muted playsinline>
+    <source src="https://g.top4top.io/m_3521bx6a40.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const bgMusic = document.getElementById('bgMusic');
+    
+    // Set volume ke 1 (full) setelah halaman dimuat
+    bgMusic.volume = 1;
+    bgMusic.muted = false;
+    
+    // Coba mainkan
+    const playPromise = bgMusic.play();
+    
+    if (playPromise !== undefined) {
+        playPromise.catch(error => {
+            console.log('Autoplay dicegah, cuba mainkan secara manual selepas interaksi');
+            document.addEventListener('click', function playOnClick() {
+                bgMusic.play();
+                document.removeEventListener('click', playOnClick);
+            });
+        });
+    }
+});
+</script>
     <div class="night"></div>
     <div class="flowers">
       <div class="flower flower--1">
@@ -325,25 +348,7 @@
     </div>
     <script src="main.js"></script>
     <!-- <script src="./js/audio.js"></script> -->
-<script>
-  document.addEventListener('DOMContentLoaded', function() {
-            const bgMusic = document.getElementById('bgMusic');
-            
-            // Coba putar musik, tangani jika ada error (karena kebijakan autoplay)
-            function attemptPlay() {
-                bgMusic.play().catch(error => {
-                    console.log('Autoplay prevented:', error);
-                    // Jika autoplay dicegah, coba lagi setelah interaksi pengguna
-                    document.addEventListener('click', function() {
-                        bgMusic.play().catch(e => console.log('Still prevented:', e));
-                    }, { once: true });
-                });
-            }
-            
-            attemptPlay();
-        });
-</script>
-    
+
   </body>
 </html>
 
